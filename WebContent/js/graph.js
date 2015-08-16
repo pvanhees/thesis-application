@@ -60,6 +60,17 @@
       return this.json.dataproperties;
     };
 
+    JsonGraph.prototype.hasNodeProperties = function() {
+      var hasAllProperties, i, len, properties, property;
+      properties = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+      hasAllProperties = true;
+      for (i = 0, len = properties.length; i < len; i++) {
+        property = properties[i];
+        hasAllProperties = nodeProperties[nodes[0].id].hasOwnProperty(property);
+      }
+      return hasAllProperties;
+    };
+
     JsonGraph.prototype.getNodes = function() {
       return nodes;
     };

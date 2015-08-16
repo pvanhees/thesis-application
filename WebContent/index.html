@@ -10,9 +10,9 @@
     <script src="js/graph.js"></script>
     <script src="js/sedd.js"></script>
     <script src="js/cola-directed.js"></script>
+    <script src="js/chord.js"></script>
 
 <!--     <script src="cola-color-graph.js"></script> -->
-<!--     <script src="chord.js"></script> -->
     <script>
       var json;
       var graphs = [];
@@ -56,7 +56,7 @@
     </script>
     <h3>Hello Visualisations</h3>
     <a href="test.html">test</a><br/>
-<!--     <a href="#" onclick="clearVisualisations(); drawChord(json);">chord diagram</a><br/> -->
+    <a href="#" onclick="clearVisualisations(); drawChord(graphs[0]);">chord diagram</a><br/>
 <!--     <a href="#" onclick="clearVisualisations(); drawColaColor(json);">cola</a><br/> -->
 <!--     <a href="cola-tree.html">cola tree</a><br/> -->
     <a href="#" onclick="clearVisualisations(); drawColaDirected(graphs[0]);">cola directed</a><br/>

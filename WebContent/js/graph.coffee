@@ -27,10 +27,24 @@ class @JsonGraph
   getDataProperties: ->
     @json.dataproperties
 
+  #checks if the given properties are present
+  hasNodeProperties: (properties...) ->
+  	hasAllProperties = true;
+  	for property in properties
+  		hasAllProperties = nodeProperties[nodes[0].id].hasOwnProperty property
+  	hasAllProperties
+
+  #checks if the given properties are present
+  hasNodeProperties: (properties...) ->
+  	hasAllProperties = true;
+  	for property in properties
+  		hasAllProperties = edgeProperties[edges[0].id].hasOwnProperty property
+  	hasAllProperties
+
   #returns list of node objects of format: {id}
   getNodes: -> 
     nodes  
-
+    
   #returns list of edge objects of format: {id, source, target}
   getEdges: ->
     edges

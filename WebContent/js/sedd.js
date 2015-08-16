@@ -10,7 +10,10 @@ function drawSedd(graphs,cutoff){
 	this.graphs = graphs;
 	//make sure the graphs have the right properties
 	for(i = 0; i < graphs.length; i++){
-		if (graphs[i].hasGraphProperties(["weighted", "directed"])) {
+		if (!graphs[i].hasGraphProperties("weighted", "directed")
+				|| !graphs[i].hasNodeProperties("category", "x")
+				|| !graphs[i].hadEdgeProperties("group", "sequenceIds")
+		) {
 			d3.select("body").append("p").html("The selected data is not fit for this visualisation");
 			return false;
 		}
@@ -37,7 +40,7 @@ function drawSedd(graphs,cutoff){
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	var categories = ["A","G","I","L","V","C","M","S","T","P","F","W","Y","H","K","R","D","E","N","Q",".","X"];
+	var categories = graphs[0].getDataProperties().categories;
 	var groups = [];
 	groups.push(["A","G","I","L","V"]);
 	groups.push(["C","M","S","T"]);

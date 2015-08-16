@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -39,6 +40,8 @@ public class DataReader implements IDataReader{
 
 		AdjacencyListGraph graph = new AdjacencyListGraph(graphId);
 		graph.addAttribute("datasize", lines.size());
+		List<String> categories = new ArrayList<>(Arrays.asList(new String[] {"A","G","I","L","V","C","M","S","T","P","F","W","Y","H","K","R","D","E","N","Q",".","X"}));
+		graph.addAttribute("categories", categories);
 		List<String> graphTypes = new ArrayList<>();
 		graphTypes.add("weighted");
 		graphTypes.add("directed");

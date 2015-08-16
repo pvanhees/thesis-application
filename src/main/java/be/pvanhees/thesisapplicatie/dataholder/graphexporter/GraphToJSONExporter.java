@@ -25,7 +25,17 @@ public class GraphToJSONExporter implements GraphExporter<String>{
 				if(key.equals("graphproperties")) continue;
 				if(graph.getAttribute(key) instanceof Integer)
 					json.append("\"" + key + "\":" + graph.getAttribute(key) + ""); 
-				else
+				else if(graph.getAttribute(key) instanceof List){
+					json.append("\"" + key + "\":[" );
+					List<String> list = graph.getAttribute(key);
+					Iterator<String> it = list.iterator();
+					while(it.hasNext()){
+						json.append("\"" + it.next() + "\"");
+						if(it.hasNext())
+							json.append(",");
+					}
+					json.append("]");
+				} else
 					json.append("\"" + key + "\":\"" + graph.getAttribute(key) + "\""); 
 				if(properties.hasNext())
 					json.append(",");
