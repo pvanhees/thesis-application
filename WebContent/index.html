@@ -2,37 +2,29 @@
 <html>
   <head>
     <style>
-      @import url(style.css)
-      .node {
-        stroke: #fff;
-        stroke-width: 1.5px;
-      }
-
-      .link {
-        stroke: #999;
-        stroke-opacity: .8;
-      }
-
     </style>
   </head>
   <body>
-    <script src="d3.v3.min.js"></script>
-    <script src="cola.v3.min.js"></script>
-    <script src="graph.js"></script>
-    <script src="seddData.js"></script>
-    <script src="sedd.js"></script>
+    <script src="lib/d3.v3.min.js"></script>
+    <script src="lib/cola.v3.min.js"></script>
+    <script src="js/graph.js"></script>
+    <script src="js/sedd.js"></script>
+    <script src="js/cola-directed.js"></script>
+
 <!--     <script src="cola-color-graph.js"></script> -->
 <!--     <script src="chord.js"></script> -->
     <script>
       var json;
-      var data;
+      var graphs = [];
       xobj = new XMLHttpRequest();
-      xobj.open("GET", '/graph/defaultgraph',true);
+      xobj.open("GET", 'api/graph/defaultgraph',true);
       xobj.setRequestHeader("Content-type", "application/json");
       xobj.onreadystatechange = function() {
         if(xobj.readyState == 4 && xobj.status == 200){
           json = JSON.parse(xobj.responseText);
-          data = new JsonGraph(json);
+          for(i = 0; i < json.datasets.length; i++){
+        	  graphs[i] = new JsonGraph(json.datasets[i]);
+          }
         }
       }
       xobj.send();
@@ -45,7 +37,7 @@
         d3.select("#slider").selectAll("*").remove();
       }
 
-      function createSedd(data){
+      function createSedd(graphs){
         clearVisualisations(); 
         d3.select("#slider").append("input")
           .attr("type","number")
@@ -59,16 +51,16 @@
           //clearVisualisations(); 
           redrawWithCutoff(cutoff);
         });
-        drawSedd(data, 0);
+        drawSedd(graphs, 0);
       }
     </script>
     <h3>Hello Visualisations</h3>
     <a href="test.html">test</a><br/>
-    <a href="#" onclick="clearVisualisations(); drawChord(json);">chord diagram</a><br/>
-    <a href="#" onclick="clearVisualisations(); drawColaColor(json);">cola</a><br/>
-    <a href="cola-tree.html">cola tree</a><br/>
-    <a href="cola-directed.html">cola directed</a><br/>
-    <a href="#" onclick="createSedd(data);">sedd</a><br/>
+<!--     <a href="#" onclick="clearVisualisations(); drawChord(json);">chord diagram</a><br/> -->
+<!--     <a href="#" onclick="clearVisualisations(); drawColaColor(json);">cola</a><br/> -->
+<!--     <a href="cola-tree.html">cola tree</a><br/> -->
+    <a href="#" onclick="clearVisualisations(); drawColaDirected(graphs[0]);">cola directed</a><br/>
+    <a href="#" onclick="createSedd(graphs);">sedd</a><br/>
     <div id="slider"></div>
     <div id="visualisations">
     </div>

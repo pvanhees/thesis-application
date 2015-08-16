@@ -4,33 +4,36 @@ class @JsonGraph
   edgeObjects = []
   nodeProperties = {}
   edgeProperties = {}
-  firstDataset = {}
   
   constructor: (@json) ->
-    firstDataset = json.datasets[0]
-    nodes = (node.id for node in firstDataset.nodes)
-    edges = (edge.id for edge in firstDataset.edges)
-    for edge in firstDataset.edges
-      edgeObjects.push({"id":edge.id, "source": edge.source, "target": edge.target})
+    for edge in @json.edges
+      edges.push({"id":edge.id, "source": edge.source, "target": edge.target})
       edgeProperties[edge.id] = edge.properties
-    for node in firstDataset.nodes
+    for node in @json.nodes
+      nodes.push({"id":node.id})
       nodeProperties[node.id] = node.properties
+  
+  getId: ->
+  	@json.id
+  
+  hasGraphProperties: (properties...) ->
+  	hasAllProperties = true
+  	for property in properties
+  		index = @json.graphproperties.indexOf property
+  		hasAllProperties = false if index is -1
+  	hasAllProperties
   
   #returns the data properties
   getDataProperties: ->
-    firstDataset.dataproperties
+    @json.dataproperties
 
-  #returns list of node id's 
+  #returns list of node objects of format: {id}
   getNodes: -> 
     nodes  
 
-  #return list of edge id's 
+  #returns list of edge objects of format: {id, source, target}
   getEdges: ->
     edges
-
-  #returns list of edge objects of format: {id, source, target}
-  getEdgesAsObjects: ->
-    edgeObjects
 
   #returns the properties of the node with id 'key' 
   getNodeProperties: (key) ->
@@ -53,11 +56,11 @@ class @JsonGraph
   # the list of nodes in this graph class.
   asMatrix: (valueProperty="PropertyEdgeAmount") ->
     matrix = []
-    for nodeR in firstDataset.nodes
+    for nodeR in @json.nodes
       row = []
-      for nodeC in firstDataset.nodes
+      for nodeC in @json.nodes
         amount = 0
-        for edge in firstDataset.edges
+        for edge in @json.edges
           if (edge.source is nodeR.id and edge.target is nodeC.id) or 
              (edge.source is nodeC.id and edge.target is nodeR.id)
               
@@ -70,4 +73,4 @@ class @JsonGraph
     matrix
               
   asJson: -> 
-    firstDataset
+    @json

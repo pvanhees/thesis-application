@@ -39,6 +39,10 @@ public class DataReader implements IDataReader{
 
 		AdjacencyListGraph graph = new AdjacencyListGraph(graphId);
 		graph.addAttribute("datasize", lines.size());
+		List<String> graphTypes = new ArrayList<>();
+		graphTypes.add("weighted");
+		graphTypes.add("directed");
+		graph.addAttribute("graphproperties", graphTypes);
 		for(String line : lines){
 
 			if(!sequenceIds.containsKey(line)){

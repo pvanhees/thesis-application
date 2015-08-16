@@ -35,28 +35,34 @@ public class DataController {
 		IDataReader builder = new DataReader();
 
 		File panelB = new File("/tmp/panelb.txt");
-		InputStream in = this.getClass().getClassLoader().getResourceAsStream("panel-b.txt");
-		try {
-			Files.copy(in, Paths.get(panelB.getAbsolutePath()));
-		} catch (IOException e2) {
-			e2.printStackTrace();
+		if(!panelB.exists()){
+			InputStream in = this.getClass().getClassLoader().getResourceAsStream("panel-b.txt");
+			try {
+				Files.copy(in, Paths.get(panelB.getAbsolutePath()));
+			} catch (IOException e2) {
+				e2.printStackTrace();
+			}
 		}
 
 		File panelC = new File("/tmp/panelc.txt");
-		in = this.getClass().getClassLoader().getResourceAsStream("panel-c.txt");
-		try {
-			Files.copy(in, Paths.get(panelC.getAbsolutePath()));
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		if(!panelC.exists()){
+			InputStream in = this.getClass().getClassLoader().getResourceAsStream("panel-c.txt");
+			try {
+				Files.copy(in, Paths.get(panelC.getAbsolutePath()));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 
 		List<Graph> graphs = new ArrayList<>();
 		graphs.add(builder.createGraphFrom(panelB,"0"));
-		graphs.add(builder.createGraphFrom(panelC,"0"));
+		graphs.add(builder.createGraphFrom(panelC,"1"));
 		GraphExporter<String> exporter = new GraphToJSONExporter();
-		return exporter.export(graphs);
+		String export = exporter.export(graphs);
+		System.out.println(export);
+		return export;
 	}
-	
+
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
