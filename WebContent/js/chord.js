@@ -34,7 +34,7 @@ function drawChord(graph) {
 
 	var colors = [];
 	for(i = 0; i < categories.length; i++){
-		colors[i] = "#"+((1<<24)*Math.random()|0).toString(16);
+		colors[i] = "#"+((1<<12)*Math.random()|0).toString(16);
 	}
 
 	var fill = d3.scale.ordinal()

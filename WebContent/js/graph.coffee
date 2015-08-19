@@ -21,6 +21,7 @@ class @JsonGraph
   	for property in properties
   		index = @json.graphproperties.indexOf property
   		hasAllProperties = false if index is -1
+  		if hasAllProperties is false then return false
   	hasAllProperties
   
   #returns the data properties
@@ -32,13 +33,15 @@ class @JsonGraph
   	hasAllProperties = true;
   	for property in properties
   		hasAllProperties = nodeProperties[nodes[0].id].hasOwnProperty property
+  		if hasAllProperties is false then return false
   	hasAllProperties
 
   #checks if the given properties are present
-  hasNodeProperties: (properties...) ->
+  hasEdgeProperties: (properties...) ->
   	hasAllProperties = true;
   	for property in properties
   		hasAllProperties = edgeProperties[edges[0].id].hasOwnProperty property
+  		if hasAllProperties is false then return false
   	hasAllProperties
 
   #returns list of node objects of format: {id}

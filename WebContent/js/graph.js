@@ -52,6 +52,9 @@
         if (index === -1) {
           hasAllProperties = false;
         }
+        if (hasAllProperties === false) {
+          return false;
+        }
       }
       return hasAllProperties;
     };
@@ -67,6 +70,23 @@
       for (i = 0, len = properties.length; i < len; i++) {
         property = properties[i];
         hasAllProperties = nodeProperties[nodes[0].id].hasOwnProperty(property);
+        if (hasAllProperties === false) {
+          return false;
+        }
+      }
+      return hasAllProperties;
+    };
+
+    JsonGraph.prototype.hasEdgeProperties = function() {
+      var hasAllProperties, i, len, properties, property;
+      properties = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+      hasAllProperties = true;
+      for (i = 0, len = properties.length; i < len; i++) {
+        property = properties[i];
+        hasAllProperties = edgeProperties[edges[0].id].hasOwnProperty(property);
+        if (hasAllProperties === false) {
+          return false;
+        }
       }
       return hasAllProperties;
     };

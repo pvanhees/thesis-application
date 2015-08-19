@@ -4,6 +4,7 @@ var cutoff,
 	nodeWidth,
 	seddSize,
 	groups,
+	isRendered,
 	offset;
 
 function drawSedd(graphs,cutoff){
@@ -11,10 +12,12 @@ function drawSedd(graphs,cutoff){
 	//make sure the graphs have the right properties
 	for(i = 0; i < graphs.length; i++){
 		if (!graphs[i].hasGraphProperties("weighted", "directed")
-				|| !graphs[i].hasNodeProperties("category", "x")
-				|| !graphs[i].hadEdgeProperties("group", "sequenceIds")
+				|| !graphs[i].hasNodeProperties("group","category", "x")
+				|| !graphs[i].hasEdgeProperties("group", "sequenceIds")
 		) {
-			d3.select("body").append("p").html("The selected data is not fit for this visualisation");
+			d3.select("#visualisations").selectAll("*").remove().
+			d3.select("#visualisations").append("p").html("The selected data is not fit for this visualisation");
+			rendered = false;
 			return false;
 		}
 	}
@@ -160,6 +163,7 @@ function drawSedd(graphs,cutoff){
 			.append("title")
 			.text(function(n) { return n.id + "\n" + format(graph.getNodeProperty(n.id, "weight")); });
 	}
+	isRendered = true;
 }
 
 function selectSequence(d, graph){
@@ -168,7 +172,7 @@ function selectSequence(d, graph){
 		.style("stroke-width", function(e) { 
 			var scale = d3.scale.linear().rangeRound([0,maxNodeHeight * 2]).domain([0,graph.getDataProperties().datasize]);
 			var amount = scale(sequenceContainsSequences(e,d, graph));
-//			var value = weightScale(amount, graph);
+			var value = weightScale(amount, graph);
 			return amount ; 
 		});
 }
@@ -203,16 +207,17 @@ function xScale(d){
 }
 
 function redrawWithCutoff(cutoff, graph) {
+	if(!isRendered) return false;
 	this.cutoff = cutoff;
 	var cutoffWeight = calculateCutoffWeight(cutoff);
 	d3.selectAll(".link" + graph.getId())
-	.data(graph.edges)
-	.style("opacity", function (e) {return e.properties.weight > cutoffWeight ? "0.7" : "0";})
+	.data(graph.getEdges())
+	.style("opacity", function (e) {return graph.getEdgeProperty(e,"weight") > cutoffWeight ? "0.7" : "0";})
 	.style("stroke-width", function(e) { return e.dy; });
 
 	d3.selectAll(".node" + graph.getId())
-	.data(graph.nodes)
-	.style("opacity", function (e) {return e.properties.weight > cutoffWeight ? "0.7" : "0";});
+	.data(graph.getNodes())
+	.style("opacity", function (e) {return graph.getNodeProperty(e, "weight") > cutoffWeight ? "0.7" : "0";});
 }
 
 function calculateCutoffWeight(cutoff){

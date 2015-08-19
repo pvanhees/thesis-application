@@ -39,6 +39,7 @@
 
       function createSedd(graphs){
         clearVisualisations(); 
+        clearSlider();
         d3.select("#slider").append("input")
           .attr("type","number")
           .attr("id","cutoff")
@@ -55,11 +56,7 @@
       }
     </script>
     <h3>Hello Visualisations</h3>
-    <a href="test.html">test</a><br/>
-    <a href="#" onclick="clearVisualisations(); drawChord(graphs[0]);">chord diagram</a><br/>
-<!--     <a href="#" onclick="clearVisualisations(); drawColaColor(json);">cola</a><br/> -->
-<!--     <a href="cola-tree.html">cola tree</a><br/> -->
-    <a href="#" onclick="clearVisualisations(); drawColaDirected(graphs[0]);">cola directed</a><br/>
+    <a href="#" onclick="clearVisualisations(); clearSlider(); drawChord(graphs[0]);">chord diagram</a><br/>
     <a href="#" onclick="createSedd(graphs);">sedd</a><br/>
     <div id="slider"></div>
     <div id="visualisations">
