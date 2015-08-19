@@ -20,10 +20,10 @@ import org.graphstream.graph.Graph;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
-import be.pvanhees.thesisapplicatie.dataholder.graphexporter.GraphExporter;
-import be.pvanhees.thesisapplicatie.dataholder.graphexporter.GraphToJSONExporter;
 import be.pvanhees.thesisapplicatie.datareader.DataReader;
 import be.pvanhees.thesisapplicatie.datareader.IDataReader;
+import be.pvanhees.thesisapplicatie.graphapi.graphexporter.GraphExporter;
+import be.pvanhees.thesisapplicatie.graphapi.graphexporter.GraphToJSONExporter;
 
 @Path("graph/")
 public class DataController {

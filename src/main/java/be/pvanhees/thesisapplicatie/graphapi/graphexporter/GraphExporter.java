@@ -1,4 +1,4 @@
-package be.pvanhees.thesisapplicatie.dataholder.graphexporter;
+package be.pvanhees.thesisapplicatie.graphapi.graphexporter;
 
 import java.util.List;
 

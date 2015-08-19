@@ -11,9 +11,7 @@ function drawChord(graph) {
 	innerRadius = Math.min(width, height) * .39,
 	outerRadius = innerRadius * 1.04;
 
-//	var categories = ["A","G","I","L","V","C","M","S","T","P","F","W","Y","H","K","R","D","E","N","Q",".","X"];
 	categories = graph.getDataProperties().categories;
-
 
 	matrix = [];
 	for(i = 0; i < categories.length; i++){
@@ -34,7 +32,7 @@ function drawChord(graph) {
 
 	var colors = [];
 	for(i = 0; i < categories.length; i++){
-		colors[i] = "#"+((1<<12)*Math.random()|0).toString(16);
+		colors[i] = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
 	}
 
 	var fill = d3.scale.ordinal()
